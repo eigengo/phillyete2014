@@ -6,8 +6,22 @@ import spray.can.Http
 import spray.routing._
 import spray.http.StatusCodes
 
+class MainService(route: Route) extends HttpServiceActor {
+  def receive: Receive = runRoute(route)
+}
+
+object MainService extends DemoRoute {
+
+  val route: Route = demoRoute
+
+}
+
 object Main extends App {
   val system = ActorSystem()
+
+  val service = system.actorOf(Props(new MainService(MainService.route)))
+
+  IO(Http)(system) ! Http.Bind(service, "0.0.0.0", port = 8080)
 
   Console.readLine()
   system.shutdown()
