@@ -52,3 +52,43 @@ trait UrlMatchingRoute extends Directives {
     }
 
 }
+
+trait HeadersMatchingRoute extends Directives {
+
+  val headersMatchingRoute =
+    get {
+      path("browser") {
+        headerValueByName("User-Agent") { userAgent =>
+          complete {
+            s"Client is $userAgent"
+          }
+        }
+      }
+    }
+
+}
+
+trait CookiesMatchingRoute extends Directives {
+
+  val cookiesMatchingRoute =
+    get {
+      path("cookie") {
+        cookie("spray") { spray =>
+          complete {
+            s"The value is $spray"
+          }
+        }
+      }
+    } ~
+    post {
+      path("cookie") {
+        setCookie(HttpCookie("spray", "SGVsbG8sIHdvcmxkCg==", httpOnly = true)) {
+          complete {
+            "Cookie created"
+          }
+        }
+      }
+    }
+}
+
+
