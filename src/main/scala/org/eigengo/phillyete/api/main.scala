@@ -10,16 +10,16 @@ class MainService(route: Route) extends HttpServiceActor {
   def receive: Receive = runRoute(route)
 }
 
-object MainService extends UrlMatchingRoute with HeadersMatchingRoute with CookiesMatchingRoute {
+object MainService extends UrlMatchingRoute with HeadersMatchingRoute with CookiesMatchingRoute with TweetAnalysisRoute {
 
-  val route: Route = urlMatchingRoute ~ headersMatchingRoute ~ cookiesMatchingRoute
+  def route(arf: ActorRefFactory): Route = urlMatchingRoute ~ headersMatchingRoute ~ cookiesMatchingRoute ~ tweetAnalysisRoute(arf)
 
 }
 
 object Main extends App {
   val system = ActorSystem()
 
-  val service = system.actorOf(Props(new MainService(MainService.route)))
+  val service = system.actorOf(Props(new MainService(MainService.route(system))))
 
   IO(Http)(system) ! Http.Bind(service, "0.0.0.0", port = 8080)
 
