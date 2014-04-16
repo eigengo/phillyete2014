@@ -1,0 +1,46 @@
+<!doctype html>
+<html>
+<head>
+    <title>Tweet streamer</title>
+    <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate, max-age=0">
+    <!-- jQuery -->
+    <script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
+    <!-- AngularJS -->
+    <script src="http://code.angularjs.org/1.2.7/angular.min.js"></script>
+    <!-- Bootstrap -->
+    <script src="assets/js/bootstrap.min.js"></script>
+    <!-- D3 and AngularJS D3 support -->
+    <script src="assets/js/d3.core.js"></script>
+    <script src="assets/js/d3.directives.js"></script>
+    <!-- App code -->
+    <script src="assets/js/tweets.app.js"></script>
+    <script src="assets/js/tweets.directives.js"></script>
+    <!-- Styles -->
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="assets/css/main.css" rel="stylesheet"/>
+</head>
+<body>
+<div ng-app="tweets.app" ng-controller="TweetsCtrl">
+    <div>
+        <input type="text" ng-model="expression" size="80" />
+        <button ng-click="executeExpression()" class="btn-primary">Execute</button>
+        <button ng-click="stop()" ng-show="running" class="btn-danger">Stop</button>
+    </div>
+    <tabs>
+        <pane title="Raw">
+            <h3>Raw data</h3>
+            <pre><code>{{values}}</code></pre>
+        </pane>
+        <pane title="Canvas">
+            <h3>Visual representation</h3>
+            <h5>Counts</h5>
+            <barchart2d data="{{values.counts}}"></barchart2d>
+            <h5>Languages</h5>
+            <barchart2d data="{{values.languages}}"></barchart2d>
+            <h5>Places / Locations</h5>
+            <barchart2d data="{{values.places}}"></barchart2d>
+        </pane>
+    </tabs>
+</div>
+</body>
+</html>
