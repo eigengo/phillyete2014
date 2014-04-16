@@ -10,9 +10,9 @@ class MainService(route: Route) extends HttpServiceActor {
   def receive: Receive = runRoute(route)
 }
 
-object MainService extends DemoRoute {
+object MainService extends UrlMatchingRoute {
 
-  val route: Route = demoRoute
+  val route: Route = urlMatchingRoute
 
 }
 
