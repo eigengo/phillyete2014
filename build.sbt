@@ -26,9 +26,11 @@ libraryDependencies ++= Seq(
   "io.spray"                 % "spray-routing"      % "1.3.0",
   "io.spray"                 % "spray-client"       % "1.3.0",
   "io.spray"                %% "spray-json"         % "1.2.3",
+  "org.eigengo.monitor"      % "agent-akka"         % "0.4-SNAPSHOT",
+  "org.eigengo.monitor"      % "output-statsd"      % "0.4-SNAPSHOT",
   "io.spray"                 % "spray-testkit"      % "1.3.0"    % "test",
   "com.typesafe.akka"       %% "akka-testkit"       % "2.3.2"    % "test",
-  "org.specs2"              %% "specs2"             % "2.3.11"    % "test"
+  "org.specs2"              %% "specs2"             % "2.3.11"   % "test"
 )
 
 parallelExecution in Test := false
@@ -38,3 +40,9 @@ transitiveClassifiers := Seq("sources")
 initialCommands in console := "import org.eigengo.phillyete._,akka.actor._"
 
 initialCommands in (Test, console) <<= (initialCommands in console)(_ + ",akka.testkit._")
+
+javaOptions in run += "-javaagent:" + System.getProperty("user.home") + "/.ivy2/cache/org.aspectj/aspectjweaver/jars/aspectjweaver-1.7.3.jar"
+
+fork in run := true
+
+connectInput in run := true
