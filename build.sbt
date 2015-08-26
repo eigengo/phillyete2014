@@ -17,7 +17,7 @@ scalacOptions ++= Seq(
 
 resolvers ++= Seq(
   "Spray Releases" at "http://repo.spray.io",
-  "Spray Releases" at "http://repo.spray.io"
+  "Sonatype snapshots" at "https://oss.sonatype.org/content/repositories/snapshots/"
 )
 
 libraryDependencies ++= Seq(
